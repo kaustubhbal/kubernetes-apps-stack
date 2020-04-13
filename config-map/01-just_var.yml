@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: variable
+spec:
+  containers:
+  - name: httpd
+    image: sachet1994/httpd:v1
+    env:
+      - name: sachet
+        value: learning_kubernetes

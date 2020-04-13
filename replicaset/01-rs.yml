@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: rs01
+  labels:
+    app: webservice-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webservice-rs
+  template:
+    metadata:
+       labels:
+         app: webservice-rs
+    spec:
+      containers:
+        - name: httpd
+          image: sachet1994/httpd:v1

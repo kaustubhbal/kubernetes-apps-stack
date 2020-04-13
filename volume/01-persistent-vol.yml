@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-pass
+data:
+  NAME: MY_SQL_PASSWORD
+  TIMING: admin
+...
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mariadb
+spec:
+  containers:
+  - name: mariadb
+    image: mariadb
+    volumeMounts:
+      - mountPath: /var/lib/mysql 
+        name: mariadb
+    envFrom:
+      - configMapRef:
+        name: mysql-pass
+   volumes:
+    - name: mariadb
+      awsElasticBlockStore:
+        volumeID: vol-0c0a814a13641b339
+        fsType: ext4
+...

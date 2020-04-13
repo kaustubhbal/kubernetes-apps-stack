@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: checking
+data:
+  NAME: Raghu
+  TIMING: 10AM
+...
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd
+spec:
+  containers:
+  - name: httpd
+    image: sachet1994/httpd:v1
+    envFrom:
+      - configMapRef:
+          name: checking
+...

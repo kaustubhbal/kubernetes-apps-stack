@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mariadb-password
+  namespace: db
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: YWRtaW4= #echo -n admin | base64
+...
+
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mariadb-pod
+  namespace: db
+  labels:
+    app: mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - name: mariadb
+        image: mariadb
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mariadb-volume
+
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-password
+                key: MYSQL_ROOT_PASSWORD
+      volumes:
+      - name: mariadb-volume
+        awsElasticBlockStore:
+          volumeID: vol-0c0a814a13641b339 #volume id
+          fsType: ext4
+      nodeName: ip-192-168-44-57.us-east-2.compute.internal #kubectl get nodes (get the name of node) node and volume should be same lregion.
+...
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-mariadb
+  namespace: db
+spec:
+  selector:
+    app: maria-db
+  ports:
+    - protocol: TCP
+      port: 3306
+...
