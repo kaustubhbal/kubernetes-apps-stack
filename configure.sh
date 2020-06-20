@@ -12,4 +12,9 @@ echo 'source <(kubectl completion bash)' >>~/.bashrc
     source /etc/bash_completion.d/kubectl
     echo 'source <(kubectl completion bash)' >> /etc/bashrc
     source /etc/bash_completion.d/kubectl
+    
+
+#kubernetes notes    
+#https://phoenixnap.com/kb/understanding-kubernetes-architecture-diagrams
+
 
