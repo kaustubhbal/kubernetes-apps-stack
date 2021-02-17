@@ -7,6 +7,8 @@ mv aws-iam-authenticator /bin/
 curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/kubectl
 chmod +x kubectl
 mv kubectl /bin/
+apt-get update
+apt-get install awscli -y
 echo 'source <(kubectl completion bash)' >>~/.bashrc
     kubectl completion bash >/etc/bash_completion.d/kubectl
     source /etc/bash_completion.d/kubectl
