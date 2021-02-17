@@ -14,6 +14,7 @@ echo 'source <(kubectl completion bash)' >>~/.bashrc
     source /etc/bash_completion.d/kubectl
     
 
+eksctl create cluster --name prod --version 1.17 --nodegroup-name standard-workers --node-type t3.medium --nodes 3 --nodes-min 1 --nodes-max 3 --node-ami auto --region us-east-2 --ssh-access --ssh-public-key=ohio &> output.log &
 #kubernetes notes    
 #https://phoenixnap.com/kb/understanding-kubernetes-architecture-diagrams
 
