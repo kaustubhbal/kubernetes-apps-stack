@@ -16,4 +16,4 @@ spec:
     spec:
       containers:
         - name: httpd
-          image: sachet1994/httpd:v1
+          image: nginx:latest
