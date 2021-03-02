@@ -41,9 +41,8 @@ spec:
       volumes:
       - name: mariadb-volume
         awsElasticBlockStore:
-          volumeID: vol-0c0a814a13641b339
+          volumeID: vol-09d35fb3ff82e8fc5
           fsType: ext4
-      nodeName: ip-192-168-29-137.us-east-2.compute.internal
 ...
 
 ---

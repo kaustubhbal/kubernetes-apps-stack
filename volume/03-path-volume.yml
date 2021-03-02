@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sql-credential
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: c2FjaGV0MTIz
+...
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mariadb
+  labels:
+    name: mariadb
+spec:
+  containers:
+  - name: maridb
+    image: mariadb
+    volumeMounts:
+    - mountPath: /var/lib/mysql
+      name: volume-path
+  volumes:
+  - name: volume-path
+    hostPath:
+      path: /opt/mysql #create this path in host-machine
+      type: Directory
+    env:
+      - name: MYSQL_ROOT_PASSWORD #what mariadb id looking for
+        valueFrom:
+            secretKeyRef:
+              name: sql-credential #name of secret
+              key: MYSQL_ROOT_PASSWORD
+...
