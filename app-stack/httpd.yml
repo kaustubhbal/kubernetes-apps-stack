@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: frontend
+...
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: httpd-cm
+  namespace: frontend
+data:
+  UI_ENDPOINT: service-tomcat.ui.svc.cluster.local
+...
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-pod
+  namespace: frontend
+  labels:
+    app: httpd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpd
+  template:
+    metadata:
+      labels:
+        app: httpd
+    spec:
+      containers:
+      - name: httpd
+        image: sachet1994/httpd:v2
+        env:
+          - name: UI_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: httpd-cm
+                key: UI_ENDPOINT
+...
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-httpd
+  namespace: frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: httpd
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+...
+

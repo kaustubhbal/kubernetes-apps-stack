@@ -3,18 +3,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: nginx-deployment-clusterip
   labels:
     app: nginx
 spec:
   replicas: 3
   selector:
     matchLabels:
-       app: nginx
+       app: nginx-cip
   template:
     metadata:
       labels:
-        app: nginx
+        app: nginx-cip
     spec:
       containers:
       - name: nginx
@@ -29,7 +29,7 @@ metadata:
   name: service-nginx
 spec:
   selector:
-    app: nginx
+    app: nginx-cip
   ports:
   - protocol: TCP
     port: 80

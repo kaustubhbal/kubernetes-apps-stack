@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: mysql-pass
 data:
-  NAME: MY_SQL_PASSWORD
+  MY_SQL_PASSWORD: admin
   TIMING: admin
 ...
 ---
@@ -25,6 +25,9 @@ spec:
    volumes:
     - name: mariadb
       awsElasticBlockStore:
-        volumeID: vol-0c0a814a13641b339
+        volumeID: vol-0fd134f6f2951ef4f
         fsType: ext4
+  nodeSelector:
+          making: "test"
 ...
+

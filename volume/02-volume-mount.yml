@@ -25,6 +25,8 @@ spec:
       labels:
         app: mariadb
     spec:
+      nodeSelector:
+        making: "test"
       containers:
       - name: mariadb
         image: mariadb
@@ -41,7 +43,7 @@ spec:
       volumes:
       - name: mariadb-volume
         awsElasticBlockStore:
-          volumeID: vol-09d35fb3ff82e8fc5
+          volumeID: vol-0fd134f6f2951ef4f
           fsType: ext4
 ...
 

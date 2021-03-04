@@ -1,5 +1,11 @@
 ---
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: db
+...
+---
+apiVersion: v1
 kind: Secret
 metadata:
   name: mariadb-password
@@ -43,11 +49,9 @@ spec:
       volumes:
       - name: mariadb-volume
         awsElasticBlockStore:
-          volumeID: vol-0c0a814a13641b339 #volume id
+          volumeID: vol-09d35fb3ff82e8fc5 #volume id
           fsType: ext4
-      nodeName: ip-192-168-44-57.us-east-2.compute.internal #kubectl get nodes (get the name of node) node and volume should be same lregion.
 ...
-
 ---
 apiVersion: v1
 kind: Service
@@ -60,4 +64,5 @@ spec:
   ports:
     - protocol: TCP
       port: 3306
+      targetPort: 3306
 ...

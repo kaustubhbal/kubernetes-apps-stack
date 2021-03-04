@@ -1,0 +1,85 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ui
+...
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tomcat-secrets
+  namespace: ui
+type: Opaque
+data:
+  USERNAME: c3R1ZGVudAo= #echo -n student| base64
+  PASSWORD: c3R1ZGVudEAxCg== #echo -n student@1| base64
+...
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tomcat-cm
+  namespace: ui
+data:
+  DBHOST: service-mariadb.db.svc.cluster.local
+  DBNAME: studentapp
+...
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-pod
+  namespace: ui
+  labels:
+    app: tomcat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+      - name: tomcat
+        image: sachet1994/tomcat:v2
+        env:
+          - name: DBUSER
+            valueFrom:
+              secretKeyRef:
+                name: tomcat-secrets
+                key: USERNAME
+          - name: DBPASS
+            valueFrom:
+              secretKeyRef:
+                name: tomcat-secrets
+                key: PASSWORD
+          - name: DBENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: tomcat-cm
+                key: DBHOST
+          - name: DBPASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: tomcat-cm
+                key: DBNAME
+...
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-tomcat
+  namespace: ui
+spec:
+  selector:
+    app: tomcat
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+...
