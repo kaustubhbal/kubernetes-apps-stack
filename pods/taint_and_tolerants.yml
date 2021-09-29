@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp1
+  #namespace: prod
+spec:
+  containers:
+  - name: httpd
+    image: mariadb
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  tolerations:
+  - key: "checking"
+    operator: "Equal"
+    value: "testing"
+    effect: "NoSchedule" #PreferNoSchedule, NoExecute
+    
