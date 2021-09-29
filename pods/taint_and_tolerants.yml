@@ -17,3 +17,6 @@ spec:
     value: "testing"
     effect: "NoSchedule" #PreferNoSchedule, NoExecute
     
+Taint Node first:
+kubectl taint node <nodename> checking=testing:NoSchedule
+    
