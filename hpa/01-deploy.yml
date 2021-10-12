@@ -1,32 +1,39 @@
-
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
-  labels:
-    app: nginx
+  name: php-apache
 spec:
-  replicas: 1
   selector:
     matchLabels:
-       app: nginx
+      run: php-apache
+  replicas: 1
   template:
     metadata:
       labels:
-        app: nginx
+        run: php-apache
     spec:
       containers:
-      - name: nginx
-        image: nginx:latest 
+      - name: php-apache
+        image: k8s.gcr.io/hpa-example
         ports:
         - containerPort: 80
         resources:
-          requests: 
-            cpu: 500m
           limits:
-            cpu: 700m 
-        
-#in metadata names and labels for deployment
-#in spec in selector matchlabels for service
-#in template again metadat we have labels
-#in template we have spec where we give container detail
+            cpu: 500m
+          requests:
+            cpu: 200m
+...
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-apache
+  labels:
+    run: php-apache
+spec:
+  ports:
+  - port: 80
+  selector:
+    run: php-apache
+...
