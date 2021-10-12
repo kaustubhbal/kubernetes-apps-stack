@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: checking
 data:
-  NAME: Raghu
+  env: prod
 ...
 
 ---
@@ -17,8 +17,9 @@ spec:
   - name: httpd
     image: sachet1994/httpd:v1
     env:
-    - name: NAME 
+    - name: env 
       valueFrom:
           configMapKeyRef:
             name: checking
+            key: env
 ...
