@@ -6,10 +6,10 @@ metadata:
 spec:
   containers:
   - name: httpd
-    image: mariadb
+    image: httpd
     resources:
       limits:
         memory: "128Mi"
         cpu: "500m"
-  nodeSelector:
-    making: "test"
+  #nodeSelector:
+    #making: "test"
