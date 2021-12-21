@@ -1,0 +1,2 @@
+The 1 container will start for 30 sec and turn odd automatically
+the main difference between liveness and readiness is that readiness will not restart the container where as liveness does. 

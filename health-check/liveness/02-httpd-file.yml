@@ -32,13 +32,15 @@ spec:
         app: httpd
     spec:
       containers:
-      - name: httpd
-        image: sachet1994/newreadiness:v1
-        #readinessProbe:
-                #tcpSocket:
-                  #port: 80
-            #initialDelaySeconds: 5 #after 5 sec it will checj port 80
-          #periodSeconds: 10 # for every 10 sec it will check 
+      - name: liveness
+        image: sachet1994/liveness:v1
+        livenessProbe:
+          exec:
+            command:
+            - cat
+            - /var/www/html/health.html
+        initialDelaySeconds: 5
+        periodSeconds: 5
         env:
           - name: UI_ENDPOINT
             valueFrom:
