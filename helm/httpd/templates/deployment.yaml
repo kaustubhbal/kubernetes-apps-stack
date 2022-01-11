@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata : 
+  name: httpd-web
+  labels:
+    app: web
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: web      
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: httpd
+          image: httpd 
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http

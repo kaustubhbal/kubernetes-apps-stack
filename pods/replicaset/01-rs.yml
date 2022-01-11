@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: httpd
-          image: nginx:latest
+          image: nginx:perl
  
  #in metadata names and labels for deployment
 #in spec in selector matchlabels for service
