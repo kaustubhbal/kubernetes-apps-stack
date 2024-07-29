@@ -40,20 +40,19 @@ spec:
               configMapKeyRef:
                 name: httpd-cm
                 key: UI_ENDPOINT
-...
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-httpd
-  namespace: frontend
-spec:
-  type: LoadBalancer
-  selector:
-    app: httpd
-  ports:
-    - protocol: TCP
-      port: 80 #sserviceport
-      targetPort: 80 #podport
-...
-
+#...
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: service-httpd
+#  namespace: frontend
+#spec:
+#  type: LoadBalancer
+#  selector:
+#    app: httpd
+#  ports:
+#    - protocol: TCP
+#      port: 80 #sserviceport
+#      targetPort: 80 #podport
+#...
