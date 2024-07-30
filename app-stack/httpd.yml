@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: httpd
-        image: sachet1994/httpd:v2
+        image: sachet1994/httpd:v1
         env:
           - name: UI_ENDPOINT
             valueFrom:
